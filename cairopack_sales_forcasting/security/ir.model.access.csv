@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_forcasting,access_sales_forcasting,model_sales_forcasting,cairopack_sales_forcasting.group_sales_forcasting,1,1,1,1
+access_sales_forcasting_line,access_sales_forcasting_line,model_sales_forcasting_line,cairopack_sales_forcasting.group_sales_forcasting,1,1,1,1

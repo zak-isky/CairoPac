@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="requests_root_menu"
+                  name="Requests"
+                  web_icon="cairopack_purchase_request,static/description/menu_icon.png"
+                  sequence="6"/>
+
+        <menuitem
+                id="purchase_request_menu" parent="requests_root_menu"
+                name="Purchase Requests" action="purchase_request_action" sequence="2"/>
+
+    </data>
+</odoo>

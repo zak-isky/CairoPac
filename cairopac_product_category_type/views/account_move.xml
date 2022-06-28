@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_raw_material_action" model="ir.actions.act_window">
+            <field name="name">Raw Material</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'raw')]</field>
+        </record>
+
+
+        <record id="account_finish_product_action" model="ir.actions.act_window">
+            <field name="name">Finish Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'finish')]</field>
+        </record>
+
+
+        <record id="account_spare_parts_action" model="ir.actions.act_window">
+            <field name="name">Spare Parts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'spare')]</field>
+        </record>
+
+
+        <record id="account_work_in_progress_action" model="ir.actions.act_window">
+            <field name="name">Work In Progress</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'progress')]</field>
+        </record>
+
+        <menuitem id="product_category_menu" name="Products" parent="account.menu_finance_receivables">
+
+            <menuitem id="account_raw_material_menu" name="Raw Material"
+                   action="account_raw_material_action"/>
+
+            <menuitem id="account_finish_product_menu" name="Finish Product"
+                   action="account_finish_product_action"/>
+
+            <menuitem id="account_spare_parts_menu" name="Spare Parts"
+                 action="account_spare_parts_action"/>
+
+            <menuitem id="account_work_in_progress_menu" name="Work In Progress"
+                 action="account_work_in_progress_action"/>
+
+        </menuitem>
+    </data>
+
+</odoo>

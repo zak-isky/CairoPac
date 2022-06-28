@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="purchase_request_report" model="ir.actions.report">
+            <field name="name">Purchase Request Report</field>
+            <field name="model">purchase.request</field>
+            <field name="binding_model_id" ref="model_purchase_request"/>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">cairopack_purchase_request.purchase_request_template</field>
+        </record>
+
+    </data>
+</odoo>

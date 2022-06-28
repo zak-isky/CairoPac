@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hidden_products" model="res.groups">
+            <field name="name">hidden products</field>
+        </record>
+
+        <record model="ir.ui.menu" id="purchase.menu_procurement_partner_contact_form">
+            <field name="groups_id" eval="[(6,0,[ref('hidden_products')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="account.product_product_menu_sellable">
+            <field name="groups_id" eval="[(6,0,[ref('hidden_products')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="account.product_product_menu_purchasable">
+            <field name="groups_id" eval="[(6,0,[ref('hidden_products')])]"/>
+        </record>
+
+    </data>
+</odoo>

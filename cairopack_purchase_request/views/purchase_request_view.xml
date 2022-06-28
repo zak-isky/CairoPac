@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <data noupdate="1">
+            <record id="purchase_request_sequence" model="ir.sequence">
+                <field name="name">Purchase Request Sequence</field>
+                <field name="code">purchase.request.sequence</field>
+                <field name="prefix">PR/</field>
+                <field name="padding">4</field>
+                <field name="company_id" eval="False"/>
+            </record>
+        </data>
+
+        <record id="purchase_request_form_view" model="ir.ui.view">
+            <field name="name">purchase.request.form.view</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm_request" string="Confirm" type="object"
+                                states="draft" class="btn-primary" groups="purchase.group_purchase_manager"/>
+
+                        <button name="action_reject_request" string="Reject" type="object"
+                                states="draft" class="btn-secondary" groups="purchase.group_purchase_manager"/>
+
+                        <button name="action_set_request_to_draft" string="Reset To Draft" type="object"
+                                states="rejected" class="btn-primary" groups="purchase.group_purchase_manager"/>
+
+                        <button name="action_create_purchase_order" string="Create PO" type="object"
+                                states="confirmed" class="btn-primary" groups="purchase.group_purchase_user"/>
+
+                        <button name="action_create_purchase_requisition" string="Create PA" type="object"
+                                states="confirmed" class="btn-primary" style="margin-left:10px;" groups="purchase.group_purchase_user"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="action_view_purchase_orders"
+                                    class="oe_stat_button"
+                                    icon="fa-list-ul" attrs="{'invisible':[('purchase_order_count','&lt;',1)]}" groups="purchase.group_purchase_user">
+                                <field name="purchase_order_count" widget="statinfo" string="PO" />
+                            </button>
+                            <button type="object"
+                                    name="action_view_purchase_requisitions"
+                                    class="oe_stat_button"
+                                    icon="fa-list-ol" attrs="{'invisible':[('purchase_requisition_count','&lt;',1)]}" groups="purchase.group_purchase_user">
+                                <field name="purchase_requisition_count" widget="statinfo" string="PA"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="active" invisible="True"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Seq"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="requester_id"/>
+                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+<!--                                <field name="material_request_id"-->
+<!--                                       attrs="{'invisible': [('material_request_id', '=', False)]}"/>-->
+                            </group>
+                            <group>
+                                <field name="schedule_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="department_id" force_save="1"/>
+                            </group>
+                        </group>
+                        <group>
+                        </group>
+                        <notebook>
+                            <page name="request_items" string="Items">
+                                <field name="request_line_ids"
+                                       attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                   <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="product_default_code"/>
+                                        <field name="product_code" force_save="1"/>
+                                        <field name="cost" readonly="1" force_save="1" groups="purchase.group_purchase_user"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_uom_id" groups="uom.group_uom"/>
+                                        <field name="recommendation"/>
+                                        <field name="total_cost" groups="purchase.group_purchase_user"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="product_id"/>
+                                                    <field name="product_qty"/>
+                                                    <field name="product_uom_id" groups="uom.group_uom"/>
+                                                </group>
+                                                <group>
+                                                    <field name="product_default_code"/>
+                                                    <field name="recommendation"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="total_cost"/>
+
+                                </group>
+                            </page>
+                            <page name="reject_reason" string="Reject Reason"
+                                  attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                <field name="reject_reason"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_request_tree_view" model="ir.ui.view">
+            <field name="name">purchase.request.tree.view</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state=='draft'" decoration-success="state=='confirmed'"
+                      decoration-danger="state=='rejected'">
+                    <field name="name"/>
+                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                    <field name="requester_id"/>
+                    <field name="department_id"/>
+                    <field name="request_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_request_action" model="ir.actions.act_window">
+            <field name="name">Purchase Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

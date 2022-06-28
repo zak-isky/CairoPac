@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <template id="purchase_request_template" >
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                             <h1 class="text-center" t-field="o.name" />
+                            <br/>
+                             <div class="row mt32 mb32" id="informations">
+                        <div t-if="o.request_date" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Request Date:</strong>
+                            <p class="m-0" t-field="o.request_date"/>
+                        </div>
+                        <div t-if="o.requester_id" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Requester: </strong>
+                            <p class="m-0" t-field="o.requester_id"/>
+                        </div>
+                        <div t-if="o.schedule_date" class="col-auto col-3 mw-100 mb-2">
+                            <strong>Schedule Date:</strong>
+                            <p class="m-0" t-field="o.schedule_date" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                        </div>
+                        <div t-if="o.department_id" class="col-auto col-3 mw-100 mb-2" name="expiration_date">
+                            <strong>Department:</strong>
+                            <p class="m-0" t-field="o.department_id"/>
+                        </div>
+
+            </div>
+                            <table class="table table-bordered border-primary" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                      <th style="text-align: center;">Product</th>
+                                      <th style="text-align: center;">Internal Reference</th>
+                                      <th style="text-align: center;">Cost</th>
+                                      <th style="text-align: center;">Quantity</th>
+                                      <th style="text-align: center;">Recommendation</th>
+                                      <th style="text-align: center;">Total Cost</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.request_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-field="line.product_id"/></td>
+                                            <td><span t-field="line.product_default_code"/></td>
+                                            <td><span t-field="line.cost"/></td>
+                                            <td><span t-field="line.product_qty"/></td>
+                                            <td><span t-field="line.recommendation"/></td>
+                                            <td><span t-field="line.total_cost"/></td>
+                                        </tr>
+                                    </t>
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

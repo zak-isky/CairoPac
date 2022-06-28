@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="purchase_plan_form" model="ir.ui.view">
+        <field name="name">purchase.plan.form</field>
+        <field name="model">purchase.plan</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Plan">
+            <header>
+                <button name="button_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
+                <button name="button_approve" type="object" states='submit' string="Approve" class="oe_highlight" groups="cairopac_purchase_planning.group_purchase_plan_approval"/>
+                <button name="action_create_po" type="object" states='approve' string="Create PO" class="oe_highlight"/>
+                <button name="button_close" type="object" states='done' string="Close" class="oe_highlight"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,done" readonly="1"/>
+            </header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button type="object"  name="action_view_purchase"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o" attrs="{'invisible':[('purchase_count', '=', 0)]}">
+                        <field name="purchase_count" widget="statinfo" string="Purchase Orders"/>
+                        <field name='purchase_ids' invisible="1"/>
+                    </button>
+
+                     <button type="object"  name="action_view_mrp"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o" attrs="{'invisible':[('mrp_count', '=', 0)]}">
+                        <field name="mrp_count" widget="statinfo" string="Manufacture Orders"/>
+                        <field name='mrp_ids' invisible="1"/>
+                    </button>
+                </div>
+                <div class="oe_title">
+                    <span class="o_form_label" attrs="{'invisible': [('state','!=','draft')]}">Purchase Plan</span>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="plan_date" attrs="{'readonly': [('state','in',['approve','done'])]}" required="1"/>
+                        <field name="plan_type" attrs="{'readonly': [('state','in',['approve','done'])]}" required="1"/>
+                        <field name="sales_forcasting_id" attrs="{'invisible':[('plan_type','!=','manufacture')]}"/>
+                    </group>
+                    <group>
+                        <field name="date_from" attrs="{'readonly': [('state','in',['approve','done'])]}" required="1"/>
+                        <field name="date_to" attrs="{'readonly': [('state','in',['approve','done'])]}" required="1"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Manufacturing Plan Lines" attrs="{'invisible': [('plan_type', '!=', 'manufacture')]}">
+                        <field name="manufacturing_plan_line_ids"
+                            widget="section_and_note_one2many"
+                            mode="tree"
+                            attrs="{'readonly': [('state', 'in', ['approve','done'])]}">
+                            <tree string="Manufacturing Order Lines" editable="bottom">
+                                <field
+                                    name="product_id"
+                                    domain="[('bom_ids','!=',False)]"/>
+                                <field name="product_qty"/>
+                                <field name="state" invisible="1"/>
+                                <button name="action_create_mo" type="object" attrs="{'readonly': ['|',('parent.plan_type', '!=', 'manufacture'),('parent.state', 'in',['approve','close'])] ,'invisible':[('parent.state','!=','done')]}" class="oe_highlight" string="Create MO"/>
+
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Purchase Plan Lines">
+                        <field name="purchase_plan_line_ids"
+                            widget="section_and_note_one2many"
+                            mode="tree" force_save="1">
+                            <tree string="Purchase Order Lines" editable="bottom">
+                                <field name="select_po" attrs="{'invisible':['|',('create_po','=',True),('parent.state','!=','approve')]}"/>
+                                <field name="product_id" force_save="1" domain="[('sale_ok', '=', True)]" attrs="{'readonly': ['|',('parent.plan_type', '=', 'manufacture'),('parent.state', 'in',['approve','done'])]}"/>
+                                <field name="qty_available" readonly="1"/>
+                                <field name="product_qty" force_save="1" attrs="{'readonly': ['|',('parent.plan_type', '=', 'manufacture'),('parent.state', 'in',['approve','done'])]}"/>
+                                <field name="done_qty" readonly="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="create_po" invisible="1"/>
+                                <button name="action_create_po" type="object" attrs="{'readonly': ['|',('parent.plan_type', '=', 'manufacture'),('parent.state', 'in',['approve','done'])] ,'invisible':['|',('create_po','=',True),('parent.state','!=','approve')]}" class="oe_highlight" string="Create PO"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="activity_ids" widget="mail_activity"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_plan_tree_view" model="ir.ui.view">
+        <field name="name">purchase.plan.tree</field>
+        <field name="model">purchase.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Plan">
+                <field name="name"/>
+                <field name="plan_date"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="plan_type"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="purchase_plan_action" model="ir.actions.act_window">
+        <field name="name">Purchase Plan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.plan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="purchase_plan_tree_view"/>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a purchase plan
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_purchase_plan" name="Purchase Plan" action="purchase_plan_action"
+            parent="purchase.menu_purchase_root" sequence="1" />
+
+    <menuitem id="purchase.menu_procurement_management" name="Orders"
+            parent="purchase.menu_purchase_root" sequence="2" />
+</odoo>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_item,access.product.item,model_product_item,cairopack_purchase_request.purchase_request_group,1,1,1,1
+access_purchase_request,access.purchase.request,model_purchase_request,cairopack_purchase_request.purchase_request_group,1,1,1,1
+access_purchase_request_line,access.purchase.request.line,model_purchase_request_line,cairopack_purchase_request.purchase_request_group,1,1,1,1
+access_mrp_bom,access.mrp.bom,mrp.model_mrp_bom,cairopack_purchase_request.purchase_request_group,1,0,0,0
+access_stock_move,access.stock.move,stock.model_stock_move,cairopack_purchase_request.purchase_request_group,1,0,0,0
+
+

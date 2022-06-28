@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_raw_material_action" model="ir.actions.act_window">
+            <field name="name">Raw Material</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'raw')]</field>
+        </record>
+
+        <menuitem id="sale_raw_material_menu" name="Raw Material"
+                  parent="sale.product_menu_catalog" action="sale_raw_material_action"/>
+
+
+        <record id="sale_finish_product_action" model="ir.actions.act_window">
+            <field name="name">Finish Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'finish')]</field>
+        </record>
+
+        <menuitem id="sale_finish_product_menu" name="Finish Product"
+                  parent="sale.product_menu_catalog" action="sale_finish_product_action"/>
+
+
+        <record id="sale_spare_parts_action" model="ir.actions.act_window">
+            <field name="name">Spare Parts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'spare')]</field>
+        </record>
+
+        <menuitem id="sale_spare_parts_menu" name="Spare Parts"
+                  parent="sale.product_menu_catalog" action="sale_spare_parts_action"/>
+
+
+        <record id="sale_work_in_progress_action" model="ir.actions.act_window">
+            <field name="name">Work In Progress</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('categ_id.type','=', 'progress')]</field>
+        </record>
+
+        <menuitem id="sale_work_in_progress_menu" name="Work In Progress"
+                  parent="sale.product_menu_catalog" action="sale_work_in_progress_action"/>
+
+        <menuitem id="sale.menu_product_template_action" groups="hidden_products"/>
+    </data>
+
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+        <record id="group_sales_forcasting" model="res.groups">
+            <field name="name">Sales Forcasting</field>
+        </record>
+
+    </data>
+</odoo>

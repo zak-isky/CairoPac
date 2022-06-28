@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                id="purchase_plan_report_xlsx"
+                model="purchase.plan"
+                string="Purchase Plan"
+                report_type="qweb-pdf"
+                name="isky_purchase_customizations.purchase_plan_report"
+                file="purchase plan"
+                attachment_use="False"
+        />
+    </data>
+</odoo>

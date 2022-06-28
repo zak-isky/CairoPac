@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="purchase_plan_wizard_form_view" model="ir.ui.view">
+            <field name="name">purchase.plan.wizard.form.view</field>
+            <field name="model">purchase.plan.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="partner_id" required="1" domain="[('id','in',partner_ids)]" options="{'no_create': True}"/>
+                            <field name="purchase_plan_id" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Purchase Plan Lines">
+                                <field name="purchase_plan_line_wizard_ids">
+                                    <tree editable="bottom" create="0">
+                                        <field name="product_id" required="1" readonly="1"/>
+                                        <field name="qty_available" readonly="1"/>
+                                        <field name="product_qty" required="1" readonly="1"/>
+                                        <field name="done_qty" required="1"/>
+                                        <field name="purchase_plan_wizard_id" invisible="1"/>
+                                        <field name="purchase_plan_line_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+<!--                        <group>-->
+<!--                            <field name="purchase_plan_line_wizard_ids" string="Purchase Plan Lines">-->
+<!--                                <tree editable="bottom" create="0">-->
+<!--                                    <field name="product_id" required="1" readonly="1"/>-->
+<!--                                    <field name="product_qty" required="1" readonly="1"/>-->
+<!--                                    <field name="done_qty" required="1"/>-->
+<!--                                    <field name="purchase_plan_wizard_id" invisible="1"/>-->
+<!--                                    <field name="purchase_plan_line_id" invisible="1"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+                    </sheet>
+                    <footer>
+                        <button name="action_create_po"
+                                string="Create PO"
+                                type="object"
+                                style="background-color:#68465f;border-radius: 3px;"
+                                class="oe_highlight"/>
+                        or
+                        <button special="cancel"
+                                string="Cancel"
+                                class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="group_purchase_plan_approval" model="res.groups">
+            <field name="name">Purchase Plan Approval</field>
+            <field name="implied_ids" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+        </record>
+
+    </data>
+</odoo>

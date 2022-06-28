@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+purchase_plan,access.purchase.plan,model_purchase_plan,,1,1,1,1
+manufacturing_plan_line,access.manufacturing.plan.line,model_manufacturing_plan_line,,1,1,1,1
+purchase_plan_line,access.purchase.plan.line,model_purchase_plan_line,,1,1,1,1
+
+access_purchase_plan_wizard,access_purchase_plan_wizard,model_purchase_plan_wizard,base.group_user,1,1,1,1
+access_purchase_plan_line_wizard,access_purchase_plan_line_wizard,model_purchase_plan_line_wizard,base.group_user,1,1,1,1
+
+cairopac_purchase_planning.access_purchase_plan_wizard,access_purchase_plan_wizard,cairopac_purchase_planning.model_purchase_plan_wizard,base.group_user,1,1,1,1
+cairopac_purchase_planning.access_purchase_plan_line_wizard,access_purchase_plan_line_wizard,cairopac_purchase_planning.model_purchase_plan_line_wizard,base.group_user,1,1,1,1
+
+
+

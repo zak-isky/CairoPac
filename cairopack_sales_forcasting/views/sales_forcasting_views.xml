@@ -1,0 +1,96 @@
+<odoo>
+    <data>
+        <record id="sales_forcasting_view_tree" model="ir.ui.view">
+            <field name="name">sales_forcasting_view_tree</field>
+             <field name="model">sales.forcasting</field>
+             <field name="arch" type="xml">
+                 <tree string="sales_forcasting_tree">
+                     <field name="name"/>
+                     <field name="date" />
+                     <field name="partner_id" widget="many2many_tags"/>
+                     <field name="state"/>
+                 </tree>
+             </field>
+        </record>
+        <record id="sales_forcasting_view_form" model="ir.ui.view">
+            <field name="name">sales_forcasting_view_form</field>
+            <field name="model">sales.forcasting</field>
+            <field name="arch" type="xml">
+               <form string="sales_forcasting_form">
+                   <header>
+                       <button type="object"
+                                name="set_to_confirm"
+                                state = 'draft'
+                                string="Confirm"
+                                attrs="{'invisible':[('state','=','confirm')]}"                        />
+                       <field name="state" widget="statusbar"/>
+                   </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" />
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="date" attrs="{'readonly':[('state','=','confirm')]}"/>
+                            <field name="partner_id" widget="many2many_tags" attrs="{'readonly':[('state','=','confirm')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Lines">
+                                <field name="forcasting_lines" widget="section_and_note_one2many" attrs="{'readonly':[('state','=','confirm')]}">
+                                    <tree editable="bottom"  delete="false">
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="partner_ids"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+               </form>
+            </field>
+        </record>
+        <record id="sales_forcasting_pivot" model="ir.ui.view">
+            <field name="name">sales_forcasting_pivot</field>
+            <field name="model">sales.forcasting.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Sales Forcasting">
+                    <field name="date" type="col"/>
+                    <field name="product_id" type="col"/>
+                    <field name="product_qty" type="measure"/>
+                    <field name="partner_ids" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="sales_forcasting_action" model="ir.actions.act_window">
+            <field name="name">Sales Forcasting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.forcasting</field>
+            <field name="view_mode">tree,form,pivot</field>
+        </record>
+        <menuitem id="sales_forcasting_root" name="Sales Forcasting" action="sales_forcasting_action"   web_icon="cairopack_sales_forcasting,static/description/menu_icon.png"/>
+        <menuitem id="sales_forcasting_menu_item"
+                  name="Sales Forcasting"
+                  parent ="sales_forcasting_root"
+                  action="sales_forcasting_action"
+               />
+        <record id="sales_forcasting_pivot_action" model="ir.actions.act_window">
+            <field name="name">Sales Forcasting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.forcasting.line</field>
+            <field name="view_mode">pivot</field>
+        </record>
+        <menuitem id="sales_forcasting_pivot_menu_item"
+                  name="Sales Forcasting Pivot"
+                  parent ="sales_forcasting_root"
+                  action="sales_forcasting_pivot_action"
+                  />
+
+
+
+
+
+
+
+    </data>
+</odoo>
