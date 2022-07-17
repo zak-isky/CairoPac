@@ -50,6 +50,7 @@
                   parent="purchase.menu_purchase_products" action="purchase_work_in_progress_action"/>
 
 <!--        <menuitem id="purchase.menu_procurement_partner_contact_form" groups="hidden_products"/>-->
+
     </data>
 
 </odoo>

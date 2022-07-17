@@ -49,7 +49,7 @@
         <menuitem id="stock_work_in_progress_menu" name="Work In Progress"
                   parent="stock.product_product_menu" action="stock_work_in_progress_action"/>
 
-        <menuitem id="stock.menu_product_variant_config_stock" groups="hidden_products"/>
+<!--        <menuitem id="stock.menu_product_variant_config_stock"/>-->
     </data>
 
 </odoo>
